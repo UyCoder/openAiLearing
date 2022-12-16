@@ -13,51 +13,6 @@
         <maven.compiler.target>18</maven.compiler.target>
     </properties>
     <dependencies>
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.theokanning.openai-gpt3-java/api &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.theokanning.openai-gpt3-java</groupId>-->
-<!--            <artifactId>api</artifactId>-->
-<!--            <version>0.8.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.fasterxml.jackson.core</groupId>-->
-<!--            <artifactId>jackson-databind</artifactId>-->
-<!--            <version>2.14.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.fasterxml.jackson.core</groupId>-->
-<!--            <artifactId>jackson-databind</artifactId>-->
-<!--            <version>2.13.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>cn.javaer</groupId>-->
-<!--            <artifactId>retrofit2-converter-jaxb</artifactId>-->
-<!--            <version>1.0.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>de.mannodermaus.retrofit2</groupId>-->
-<!--            <artifactId>converter-logansquare</artifactId>-->
-<!--            <version>1.4.1</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>com.jakewharton.retrofit</groupId>-->
-<!--            <artifactId>retrofit2-rxjava2-adapter</artifactId>-->
-<!--            <version>1.0.0</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>com.squareup.retrofit2</groupId>-->
-<!--            <artifactId>converter-jackson</artifactId>-->
-<!--            <version>2.7.2</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>com.squareup.retrofit2</groupId>-->
-<!--            <artifactId>adapter-rxjava2</artifactId>-->
-<!--            <version>2.3.0</version>-->
-<!--        </dependency>-->
-<!--        -->
         <dependency>
             <groupId>com.theokanning.openai-gpt3-java</groupId>
             <artifactId>client</artifactId>
@@ -69,6 +24,23 @@
             <artifactId>slf4j-simple</artifactId>
             <version>2.0.5</version>
         </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.17</version>
+        </dependency>
+
     </dependencies>
 
 
