@@ -6,6 +6,7 @@ import com.theokanning.openai.completion.CompletionRequest;
 import com.theokanning.openai.engine.Engine;
 
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,32 +17,19 @@ import java.util.Scanner;
  * lzkrfZwubDsmj8pP4F3NT3BlbkFJm4N1zN9SYlefIdXvIgIi
  */
 public class GhostWriter {
-    public static void main(String... args) {
+    public static void main(String... args) throws RuntimeException {
         String token = System.getenv("OPENAI_TOKEN");
-        OpenAiService service = new OpenAiService(token);
-        Engine davinci = service.getEngine("davinci");
-        ArrayList<CompletionChoice> storyArray = new ArrayList<CompletionChoice>();
-
-        // My code begins here:
+        String prompt;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insert the sentence tha you want to complete: \n");
-        String prompt = scanner.nextLine();
-
-        // dont touch the code below !!!
-        System.out.println("\nBrewing up a story...");
-        CompletionRequest completionRequest = CompletionRequest.builder()
-                .prompt(prompt)
-                .temperature(0.7)
-                .maxTokens(300)
-                .topP(1.0)
-                .frequencyPenalty(0.0)
-                .presencePenalty(0.3)
-                .echo(true)
-                .build();
-        service.createCompletion("davinci", completionRequest).getChoices().forEach(line -> {storyArray.add(line);});
-//        System.out.println(storyArray);
-        System.out.println(storyArray.get(0).getText());
-
+        prompt = scanner.nextLine();
+        do {
+            System.out.println(AhmedUtils.callOpenAi(prompt, token));
+            System.out.println("\n You can insert another sentence. \n But if you want to logout, Just enter EXIT.");
+            prompt = scanner.nextLine();
+        } while (!prompt.equals("EXIT"));
+        System.out.println("Thanks for using.");
         scanner.close();
     }
+
 }
