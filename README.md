@@ -1,6 +1,6 @@
 # OpenAI Java Project
 
-🚀 This is an OpenAI 🧑‍💻 project written in 💻 Java that sends a prompt to the OpenAI server 💻, receives a 📝 response, translates it to a specified language 🌍, and displays it to the user 🧑‍💻. The app also saves a record of the 💬 question and 📝 answer in a text or document file 📂 on the desktop 🖥️, and allows the user to configure the target language 🌍 and the format of the saved file 📂. 💻
+ This is an OpenAI project written in Java that sends a prompt to the OpenAI server, receives a response, translates it to a specified language, and displays it to the user 🧑‍💻. The app also saves a record of the 💬 question and 📝 answer in a text or document file 📂 on the desktop 🖥️, and allows the user to configure the target language 🌍 and the format of the saved file 📂. 💻
 
 ## Features 📋
 - Sends a prompt to the OpenAI server and receives a response
