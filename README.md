@@ -12,18 +12,17 @@ This is an OpenAI project written in Java that sends a prompt to the OpenAI serv
 ## How to Use
 1. Clone or download the repository to your local machine
 2. Make sure you have a valid OpenAI API key and enter it in the config.properties file
-3. Run the Main.java file
+3. Run the main method.
 4. Type your prompt and press enter to send it to the OpenAI server
-5. The app will display the translated response and save a record of the question and answer to a file on the desktop
+5. The app will display the response and save a record answer and translated answer to a file on the desktop
 6. To exit the app, type "EXIT" and press enter
 
 ## Configuration
-- To change the target language, modify the target_language property in the config.properties file
-- To change the format of the saved file, modify the file_format property in the config.properties file (options are "txt" or "doc")
+- To change the target language when you call the method.
+- To change the format of the saved file, modify the file_format when you call the method (options are "txt" or "doc")
 
 ## Dependencies
 - OpenAI API key
-- Google Translate API key
 - slf4j
 - javaxMail
 - junit
