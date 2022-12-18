@@ -20,20 +20,23 @@ import java.util.Scanner;
 public class GhostWriter {
     public static void main(String... args) throws RuntimeException, IOException, InterruptedException, NoSuchFieldException {
         String token = System.getenv("OPENAI_TOKEN");
-        String prompt;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Insert the sentence tha you want to complete: \n");
-        prompt = scanner.nextLine();
+        System.out.println("مەندىن خالىغان نەرسە سورىسىڭىز بولىدۇ:: \n");
+        String promptUg = scanner.nextLine();
+
         do {
+            String prompt = AhmedUtils.translateGoogle(promptUg, "ug", "en");
             System.out.println(AhmedUtils.callOpenAi(prompt, token,
                     "txt",
                     "en",
                     "tr"));
-            System.out.println("\n You can insert another sentence. \n " +
-                    "But if you want to logout, Just enter EXIT.");
-            prompt = scanner.nextLine();
-        } while (!prompt.equals("EXIT"));
-        System.out.println("Thanks for using.");
+            System.out.println("\n  مەندىن يەنە داۋاملىق سۇئال سورىسىڭىز بولىدۇ \n " +
+                    "ئەگەر چېكىنمەكچى بولسىڭىز EXIT دەپ يېزىڭ");
+            promptUg = scanner.nextLine();
+        } while (!promptUg.equals("EXIT"));
+
+
+        System.out.println("ئىشلەتكىنىڭىزگە كۆپ رەھمەت!");
         scanner.close();
 
         // sen email.

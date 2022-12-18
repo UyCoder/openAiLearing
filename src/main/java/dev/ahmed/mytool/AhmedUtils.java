@@ -1,10 +1,5 @@
 package dev.ahmed.mytool;
 
-
-
-
-
-
 import com.theokanning.openai.OpenAiService;
 import com.theokanning.openai.completion.CompletionChoice;
 import com.theokanning.openai.completion.CompletionRequest;
@@ -15,23 +10,14 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.junit.Test;
 
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Properties;
-
-import javax.mail.*;
-import javax.mail.Authenticator;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import java.util.List;
 
 
 /**
@@ -63,15 +49,18 @@ public class AhmedUtils {
             storyArray.add(line);
         });
 
-
+        // build the text for saved file
         String text = "\n" + "This is an OpenAI chat history on " +
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")) + ".\n"
                 + "====================================== \n"
                 + storyArray.get(0).toString() + ".\n"
                 + "====================================== \n"
-                + "Translation to " + targetLanguage + ": \n"
-                + "-------------------------------------- \n " +
-                transalteFromLtVernCc(storyArray.get(0).getText(), fromLanguage, targetLanguage); //
+//                + "Translation to " + targetLanguage + ": \n"
+                + "-------------------------------------- \n "
+//                + transalteFromLtVernCc(storyArray.get(0).getText(), fromLanguage, targetLanguage)
+                + "Translation to Uyghur : \n"
+                + "-------------------------------------- \n "
+                + translateGoogle(removeBlankLines(storyArray.get(0).getText()), fromLanguage, "ug"); //
 
         if(fileType=="doc") {
 
@@ -97,7 +86,7 @@ public class AhmedUtils {
 
     public static String transalteFromLtVernCc(String text,
                                                String fromLanguage,
-                                               String targetLangage) throws IOException, InterruptedException, NoSuchFieldException {
+                                               String targetLangage) throws IOException {
         OkHttpClient client = new OkHttpClient();
         RequestBody body = new FormBody.Builder()
                 .add("q", text)
@@ -120,6 +109,100 @@ public class AhmedUtils {
         return result;
     }
 
+
+    /////-===================================================
+    public static String translateGoogle(String text,
+                                 String sourceLang,
+                                 String targetLang) {
+        try {
+            // Build the URL for the translation service
+            String urlStr = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" +
+                    sourceLang + "&tl=" + targetLang + "&dt=t&q=" + URLEncoder.encode(text, "UTF-8")+ "&ie=UTF-8&oe=UTF-8";
+            URL url = new URL(urlStr);
+            // Make the HTTP request to the translation service
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            String line;
+            String result = "";
+            while ((line = reader.readLine()) != null) {
+                result += line;
+            }
+            reader.close();
+
+            // Parse the response to extract the translated text
+            String[] parts = result.split("\"");
+            String translatedText = parts[1];
+
+            // Use the translated text as needed in your application
+            System.out.println("Translated text with google: " + translatedText);
+            return translatedText;
+
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static String removeBlankLines(String input) {
+        // Split the input string into an array of lines
+        String[] lines = input.split("\r?\n");
+        // Add non-blank lines to a new list
+        List<String> nonBlankLines = new ArrayList<>();
+        for (String line : lines) {
+            if (!line.isBlank()) {
+                nonBlankLines.add(line);
+            }
+        }
+        // Concatenate the non-blank lines into a single string
+        return String.join("\n", nonBlankLines);
+    }
+
+    @Test
+    public void test1() throws IOException {
+        translateGoogle("You are my fire", "en", "ug");
+    }
+
+
+
+
+
+
+
+
+
+//
+//    public String translateGoogleFree(String text,
+//                                      String fromLanguage,
+//                                      String targetLangage){
+//        String url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
+//                +fromLanguage +
+//                "&tl=" +
+//                targetLangage +
+//                "&dt=t&q=" +
+//                URLEncoder.encode(text);
+//        OkHttpClient client = new OkHttpClient();
+//        RequestBody body = new FormBody.Builder()
+//                .add("q", text)
+//                .add("source", fromLanguage)
+//                .add("target", targetLangage)
+//                .add("format", "text")
+//                .add("api_key","")
+//                .build();
+//
+//        Request request = new Request.Builder()
+//                .url("https://lt.vern.cc/translate")
+//                .post(body)
+//                .addHeader("Content-Type", "application/json")
+//                .build();
+//
+//        Response response = client.newCall(request).execute();
+//        String result = response.body().string();
+//        result = String.format("%s", result);
+//        System.out.println(result);
+//        return result;}
 
     @Test
     public void test() throws IOException, InterruptedException, NoSuchFieldException {
