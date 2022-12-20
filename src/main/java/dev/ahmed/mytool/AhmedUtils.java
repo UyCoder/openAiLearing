@@ -35,7 +35,7 @@ public class AhmedUtils {
         OpenAiService service = new OpenAiService(token);
         Engine davinci = service.getEngine("davinci");
         ArrayList<CompletionChoice> storyArray = new ArrayList<CompletionChoice>();
-        System.out.println("\nBrewing up a story...");
+        System.out.println("\nجاۋاپنى ئويلىنىۋاتىمەن...");
         CompletionRequest completionRequest = CompletionRequest.builder()
                 .prompt(prompt)
                 .temperature(0.7)
@@ -75,7 +75,7 @@ public class AhmedUtils {
         } if (fileType=="txt"){
 
             FileWriter fileWriter = new FileWriter(System.getProperty("user.home")+"\\Desktop\\OpenAiHistory.txt", true);
-            fileWriter.write(storyArray.get(0).toString()+text);
+            fileWriter.write(text);
             fileWriter.close();
         }
 
@@ -111,13 +111,50 @@ public class AhmedUtils {
 
 
     /////-===================================================
-    public static String translateGoogle(String text,
+    public static String translateGoogle1(String text,
                                  String sourceLang,
                                  String targetLang) {
         try {
             // Build the URL for the translation service
             String urlStr = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" +
                     sourceLang + "&tl=" + targetLang + "&dt=t&q=" + URLEncoder.encode(text, "UTF-8")+ "&ie=UTF-8&oe=UTF-8";
+            URL url = new URL(urlStr);
+            // Make the HTTP request to the translation service
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            String line;
+            String result = "";
+            while ((line = reader.readLine()) != null) {
+                result += line;
+            }
+            reader.close();
+
+            // Parse the response to extract the translated text
+            String[] parts = result.split("\"");
+            String translatedText = parts[1];
+
+            // Use the translated text as needed in your application
+            System.out.println("Translated text with google: " + translatedText);
+            return translatedText;
+
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+// this method is better for free google translation
+    public static String translateGoogle(String text,
+                                         String sourceLang,
+                                         String targetLang) {
+        try {
+            // Build the URL for the translation service
+            String urlStr = "https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=" +
+                    sourceLang + "&tl=" + targetLang + "&dt=t&q=" + URLEncoder.encode(text, "UTF-8");
             URL url = new URL(urlStr);
             // Make the HTTP request to the translation service
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -159,56 +196,6 @@ public class AhmedUtils {
         // Concatenate the non-blank lines into a single string
         return String.join("\n", nonBlankLines);
     }
-
-    @Test
-    public void test1() throws IOException {
-        translateGoogle("You are my fire", "en", "ug");
-    }
-
-
-
-
-
-
-
-
-
-//
-//    public String translateGoogleFree(String text,
-//                                      String fromLanguage,
-//                                      String targetLangage){
-//        String url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
-//                +fromLanguage +
-//                "&tl=" +
-//                targetLangage +
-//                "&dt=t&q=" +
-//                URLEncoder.encode(text);
-//        OkHttpClient client = new OkHttpClient();
-//        RequestBody body = new FormBody.Builder()
-//                .add("q", text)
-//                .add("source", fromLanguage)
-//                .add("target", targetLangage)
-//                .add("format", "text")
-//                .add("api_key","")
-//                .build();
-//
-//        Request request = new Request.Builder()
-//                .url("https://lt.vern.cc/translate")
-//                .post(body)
-//                .addHeader("Content-Type", "application/json")
-//                .build();
-//
-//        Response response = client.newCall(request).execute();
-//        String result = response.body().string();
-//        result = String.format("%s", result);
-//        System.out.println(result);
-//        return result;}
-
-    @Test
-    public void test() throws IOException, InterruptedException, NoSuchFieldException {
-    }
-
-
 
 
 //    // use this method to send gmail
