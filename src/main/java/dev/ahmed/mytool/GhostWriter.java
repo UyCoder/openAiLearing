@@ -25,8 +25,11 @@ public class GhostWriter {
         String promptUg = scanner.nextLine();
 
         do {
-            String prompt = AhmedUtils.translateGoogle1(promptUg, "ug", "en");
-            System.out.println(AhmedUtils.callOpenAi(prompt, token,
+            String prompt = AhmedUtils.translateGoogle1(promptUg,
+                                            "ug",
+                                            "en");
+            System.out.println(AhmedUtils.callOpenAi(prompt,
+                    token,
                     "txt",
                     "en",
                     "tr"));

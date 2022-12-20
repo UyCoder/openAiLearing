@@ -36,7 +36,8 @@ public class AhmedUtils {
         Engine davinci = service.getEngine("davinci");
         ArrayList<CompletionChoice> storyArray = new ArrayList<CompletionChoice>();
         System.out.println("\nجاۋاپنى ئويلىنىۋاتىمەن...");
-        CompletionRequest completionRequest = CompletionRequest.builder()
+        CompletionRequest completionRequest = CompletionRequest
+                .builder()
                 .prompt(prompt)
                 .temperature(0.7)
                 .maxTokens(200)
@@ -45,7 +46,8 @@ public class AhmedUtils {
                 .presencePenalty(0.3)
                 .echo(true)
                 .build();
-        service.createCompletion("davinci", completionRequest).getChoices().forEach(line -> {
+        service.createCompletion("davinci", completionRequest)
+                .getChoices().forEach(line -> {
             storyArray.add(line);
         });
 
@@ -119,6 +121,7 @@ public class AhmedUtils {
             String urlStr = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" +
                     sourceLang + "&tl=" + targetLang + "&dt=t&q=" + URLEncoder.encode(text, "UTF-8")+ "&ie=UTF-8&oe=UTF-8";
             URL url = new URL(urlStr);
+
             // Make the HTTP request to the translation service
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
             String line;
@@ -156,6 +159,7 @@ public class AhmedUtils {
             String urlStr = "https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=" +
                     sourceLang + "&tl=" + targetLang + "&dt=t&q=" + URLEncoder.encode(text, "UTF-8");
             URL url = new URL(urlStr);
+
             // Make the HTTP request to the translation service
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
             String line;
@@ -186,6 +190,7 @@ public class AhmedUtils {
     public static String removeBlankLines(String input) {
         // Split the input string into an array of lines
         String[] lines = input.split("\r?\n");
+
         // Add non-blank lines to a new list
         List<String> nonBlankLines = new ArrayList<>();
         for (String line : lines) {
@@ -196,7 +201,6 @@ public class AhmedUtils {
         // Concatenate the non-blank lines into a single string
         return String.join("\n", nonBlankLines);
     }
-
 
 //    // use this method to send gmail
 //    public static void sendGmail(String recipientsEmail){
@@ -215,7 +219,6 @@ public class AhmedUtils {
 //                        return new PasswordAuthentication("ahmedg47262582@gmail.com", "EMAIL_PASS");
 //                    }
 //                });
-//
 //        try {
 //            // Create a new email message
 //            Message message = new MimeMessage(session);
@@ -233,6 +236,4 @@ public class AhmedUtils {
 //            throw new RuntimeException(e);
 //        }
 //    }
-
-
 }
