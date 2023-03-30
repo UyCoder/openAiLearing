@@ -42,6 +42,7 @@ public class GhostWriter {
         System.out.println("ئىشلەتكىنىڭىزگە كۆپ رەھمەت!");
         scanner.close();
 
+
         // sen email.
 //        AhmedUtils.sendGmail("ahmedbughra@gmail.com");
     }
